@@ -24,13 +24,12 @@ export const render = (content: string, context: ContextCreator) => {
 
   // Render inner
   let innerValue = "";
-  let isFirst = true;
-  for (const item of listValue) {
+  for (let i = 0; i < listValue.length; i++) {
+    const item = listValue[i];
     context.addParameter(name, item);
     const renderedValue = renderOperators(inner, context);
-    innerValue += (isFirst ? "" : offset) + renderedValue.trim() + "\n";
+    innerValue += (i == 0 ? "" : offset) + renderedValue.trim() + "\n";
     context.removeParameter(name);
-    isFirst = false;
   }
   innerValue = innerValue.slice(0, -1);
 
