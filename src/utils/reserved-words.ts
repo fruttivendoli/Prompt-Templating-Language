@@ -1,1 +1,1 @@
-export const reservedWords = ["each", "as", "if"];
+export const reservedWords = ["each", "as", "if", "else"];

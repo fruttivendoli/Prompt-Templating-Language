@@ -2,14 +2,14 @@ import vm from "vm";
 import type ContextCreator from "../utils/context-creator";
 import { renderOperators } from "../utils/operator-renderer";
 
-export const regex = /\{#each\s(.+?)\sas\s(.+?)\}.*?\n(.*)\n(.*?)\{\/each\}/gms;
+export const regex = /(\n?\s*?)\{#each\s(.+?)\sas\s(.+?)\}(.*)\{\/each\}/gms;
 
 export const render = (content: string, context: ContextCreator) => {
   const matches = [...content.matchAll(regex)];
 
   if (matches.length === 0) return "";
 
-  const [_, list, name, inner, offset] = matches[0];
+  const [_, offset, list, name, inner] = matches[0];
 
   // Render list
   const vmContextList = context.createContext();
@@ -28,10 +28,9 @@ export const render = (content: string, context: ContextCreator) => {
     const item = listValue[i];
     context.addParameter(name, item);
     const renderedValue = renderOperators(inner, context);
-    innerValue += (i == 0 ? "" : offset) + renderedValue.trim() + "\n";
+    innerValue += offset + renderedValue.trim();
     context.removeParameter(name);
   }
-  innerValue = innerValue.slice(0, -1);
 
   return innerValue;
 };

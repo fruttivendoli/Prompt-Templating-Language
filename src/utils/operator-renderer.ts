@@ -3,6 +3,7 @@ import {
   regex as regexInsert,
   render as renderInsert,
 } from "../operators/insert";
+import { regex as regexIf, render as renderIf } from "../operators/if";
 import type ContextCreator from "./context-creator";
 
 const operators = new Map<
@@ -11,6 +12,7 @@ const operators = new Map<
 >();
 
 operators.set(regexEach, renderEach);
+operators.set(regexIf, renderIf);
 operators.set(regexInsert, renderInsert);
 
 export const renderOperators = (prompt: string, context: ContextCreator) => {
