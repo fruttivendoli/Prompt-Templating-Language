@@ -4,8 +4,12 @@ import { reservedWords } from "./reserved-words";
 
 export default class ContextCreator {
   private parameters: Map<string, Parameter>;
+  private prefixes?: Map<string, string>;
 
-  constructor(parameters: Map<string, Parameter>) {
+  constructor(
+    parameters: Map<string, Parameter>,
+    prefixes?: Map<string, string>,
+  ) {
     reservedWords.forEach((word) => {
       if (parameters.has(word)) {
         console.error(
@@ -15,14 +19,28 @@ export default class ContextCreator {
       }
     });
     this.parameters = parameters;
+    this.prefixes = prefixes;
   }
 
-  addParameter(key: string, param: Parameter) {
+  addParameter(key: string, param: Parameter, prefix?: string) {
     this.parameters.set(key, param);
+    if (prefix) {
+      if (!this.prefixes) {
+        this.prefixes = new Map();
+      }
+      this.prefixes.set(key, prefix);
+    }
   }
 
   removeParameter(key: string) {
     this.parameters.delete(key);
+    if (this.prefixes) {
+      this.prefixes.delete(key);
+    }
+  }
+
+  getPrefix(key: string) {
+    return this.prefixes?.get(key);
   }
 
   createContext() {
