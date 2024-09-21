@@ -1,6 +1,8 @@
 {
   "name": "prompt-templating-language",
-  "module": "index.ts",
+  "module": "src/index.ts",
+  "main": "src/index.ts",
+  "version": "1.0.0",
   "type": "module",
   "devDependencies": {
     "@types/bun": "latest"
