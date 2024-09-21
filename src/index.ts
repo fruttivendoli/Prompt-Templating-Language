@@ -7,6 +7,6 @@ export const render = (
   parameters: Map<string, Parameter>,
   prefixes?: Map<string, string>,
 ) => {
-  const context = new ContextCreator(parameters);
+  const context = new ContextCreator(parameters, prefixes);
   return renderOperators(prompt, context);
 };
