@@ -34,4 +34,20 @@ describe("Insert Operator", () => {
     const result = render(prompt, params);
     expect(result).toBe(expected);
   });
+
+  it("Insert Operator is not replaced when escaped", () => {
+    const prompt = `
+      Text before %{word.toUpperCase()%} text after
+    `;
+
+    const params = new Map<string, Parameter>();
+    params.set("word", "inserted");
+
+    const expected = `
+      Text before {word.toUpperCase()} text after
+    `;
+
+    const result = render(prompt, params);
+    expect(result).toBe(expected);
+  });
 });

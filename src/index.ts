@@ -8,5 +8,7 @@ export const render = (
   prefixes?: Map<string, string>,
 ) => {
   const context = new ContextCreator(parameters, prefixes);
-  return renderOperators(prompt, context);
+  return renderOperators(prompt, context)
+    .replaceAll("%{", "{")
+    .replaceAll("%}", "}");
 };

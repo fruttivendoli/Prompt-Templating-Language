@@ -1,7 +1,7 @@
 import vm from "node:vm";
 import type ContextCreator from "../utils/context-creator";
 
-export const regex = /\{([^}]*)\}/gms; // Match all comments
+export const regex = /(?<!%)\{([^}]*)\}/gms; // Match all comments, allow escaping with %{}
 
 export const render = (content: string, context: ContextCreator) => {
   const matches = [...content.matchAll(regex)];
